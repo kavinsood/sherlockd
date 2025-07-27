@@ -1,6 +1,6 @@
 name = "kitsune-worker"
 main = "src/index.ts"
-compatibility_date = "2024-05-01"
+compatibility_date = "2025-05-01"
 
 # Binding for the Rate Limiting API.
 # This creates a rate limiter named RATE_LIMITER accessible in the Worker.

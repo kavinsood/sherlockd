@@ -28,20 +28,28 @@ For detailed setup instructions, see [worker/README.md](worker/README.md).
 
 ### Environment Configuration
 
-After deploying the worker, you need to configure the URLs in your frontend:
+The project is deployed as a single Cloudflare Worker that serves both the SvelteKit frontend and the API. You can optionally configure the Render API URL:
 
 1. Create a `.env` file in the root directory
 2. Add your configuration:
    ```
-   # Worker URL - replace with your actual deployed worker URL
-   VITE_WORKER_URL=https://kitsune-worker.your-subdomain.workers.dev
-   
    # Render API URL - the backend service URL (optional, has default)
-   VITE_RENDER_API_URL=https://kitsune-4d1i.onrender.com/analyze
+   VITE_RENDER_API_URL=https://hostedbackend.com/analyze
    ```
-   Replace `your-subdomain` with your actual Cloudflare subdomain.
 
 3. Restart your development server for the changes to take effect.
+
+### Deployment
+
+To deploy to Cloudflare Workers:
+
+```bash
+pnpm run deploy
+```
+
+This will:
+1. Build the SvelteKit frontend to the `build/` directory
+2. Deploy both the frontend and API as a single Worker with static assets
 
 ## license
 sherlockd web code is licensed under [CC-BY-NC-SA-4.0](LICENSE).

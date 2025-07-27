@@ -1,8 +1,7 @@
 // Configuration for the application
 export const config = {
-    // Worker URL - replace with your actual deployed worker URL
-    // You can set this via environment variable VITE_WORKER_URL or use the default
-    workerUrl: import.meta.env.VITE_WORKER_URL || 'https://kitsune-worker.your-subdomain.workers.dev',
+    // API endpoint - since we're deploying as a single worker, use relative path
+    apiUrl: '/api/analyze',
     
     // Render API URL - the backend service URL
     // You can set this via environment variable VITE_RENDER_API_URL

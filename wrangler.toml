@@ -1,0 +1,20 @@
+name = "sherlockd"
+compatibility_date = "2025-01-01"
+main = "worker/src/index.ts"
+
+# Static assets from SvelteKit build
+[assets]
+directory = "./build"
+not_found_handling = "single-page-application"
+binding = "ASSETS"
+
+# Rate limiter binding
+[[unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1337"
+simple = { limit = 10, period = 60 }
+
+# Environment variables (not secrets)
+[vars]
+KITSUNE_API_URL = "https://kitsune-4d1i.onrender.com/analyze" 

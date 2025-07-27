@@ -12,8 +12,8 @@
             console.log("Download requested for:", url);
             
             try {
-                // Call the worker function
-                const response = await fetch(config.workerUrl, {
+                // Call the API endpoint
+                const response = await fetch(config.apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
