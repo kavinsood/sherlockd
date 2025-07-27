@@ -21,4 +21,5 @@ simple = { limit = 10, period = 60 }
 
 # Environment variables (not secrets)
 [vars]
-KITSUNE_API_URL = "https://kitsune-4d1i.onrender.com/analyze" 
+KITSUNE_API_URL = "${KITSUNE_API_URL}"
+ENVIRONMENT = "production" 

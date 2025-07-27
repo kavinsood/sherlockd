@@ -1,8 +1,9 @@
 <script lang="ts">
     import SmallDialog from "$components/dialog/SmallDialog.svelte";
     import NoScriptDialog from "$components/dialog/NoScriptDialog.svelte";
+    import type { Dialog } from "$lib/types/dialog";
 
-    let dialogs = $state([]);
+    let dialogs = $state<Dialog[]>([]);
     let backdropVisible = $derived(dialogs.length > 0);
 </script>
 

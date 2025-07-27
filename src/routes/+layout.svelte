@@ -7,8 +7,6 @@
     import "@fontsource/ibm-plex-mono/500.css";
 
     import { onMount } from "svelte";
-    import { page } from "$app/stores";
-    import { updated } from "$app/stores";
     import { browser } from "$app/environment";
     import { afterNavigate } from "$app/navigation";
 
@@ -16,9 +14,9 @@
     import NotchSticker from "$components/misc/NotchSticker.svelte";
     import DialogHolder from "$components/dialog/DialogHolder.svelte";
 
-    let reduceMotion = false;
-    let reduceTransparency = false;
-    let preloadAssets = false;
+    let reduceMotion = $state(false);
+    let reduceTransparency = $state(false);
+    let preloadAssets = $state(false);
     let theme = $state('dark'); // Default for SSR
 
     if (browser) {
@@ -109,7 +107,7 @@
         height: 0;
         position: absolute;
         z-index: -10;
-        content: url(/sherlockd.avif);
+        content: url(/sherlockd.avif) url(/error.avif);
 
         font-family: "Recursive Mono";
         font-size: 0;

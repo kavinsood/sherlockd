@@ -7,4 +7,18 @@ export interface DialogButton {
     timeout?: number;
 }
 
-export type SmallDialogIcons = "warn-red"; 
+export type SmallDialogIcons = "warn-red";
+
+export interface SmallDialog {
+    type: "small";
+    id: string;
+    title?: string;
+    bodyText?: string;
+    bodySubText?: string;
+    icon?: SmallDialogIcons | null;
+    buttons?: DialogButton[] | null;
+    dismissable?: boolean;
+    leftAligned?: boolean;
+}
+
+export type Dialog = SmallDialog; 

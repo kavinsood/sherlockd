@@ -107,5 +107,6 @@
 
     #turnstile-widget {
         /* Invisible widget - no visual elements */
+        display: none;
     }
 </style>

@@ -17,16 +17,40 @@
     let linkInput: Optional<HTMLInputElement>;
     let link = $state("");
     let dialogs = $state([]);
-    let turnstileEnabled = $state(true); // Enable Turnstile by default
+    let turnstileEnabled = $state(false); // Disable Turnstile for now
     let turnstileSolved = $state(false);
     let turnstileToken = $state<string | null>(null);
     let turnstileComponent: Turnstile;
     let turnstileExecuting = $state(false); // Prevent multiple executions
 
     const validLink = (url: string) => {
-        try {
-            return /^https?\:/i.test(new URL(url).protocol);
-        } catch {}
+        if (!url || url.trim() === '') return false;
+        
+        // If it already has a protocol, validate it
+        if (url.includes('://')) {
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+        
+        // For domain names without protocol, check if it's a valid domain
+        const domainRegex = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        return domainRegex.test(url.trim());
+    };
+
+    const normalizeUrl = (url: string): string => {
+        if (!url || url.trim() === '') return '';
+        
+        // If it already has a protocol, return as is
+        if (url.includes('://')) {
+            return url;
+        }
+        
+        // Add https:// if it's just a domain
+        return `https://${url.trim()}`;
     };
 
     let isFocused = $state(false);
@@ -104,63 +128,13 @@
 
     const savingHandler = async ({ url }: { url: string }) => {
         if (url && validLink(url) && !isDisabled && !isLoading) {
-            console.log("Download requested for:", url);
+            console.log("Analysis requested for:", url);
             
-            isLoading = true;
+            // Normalize the URL for display
+            const normalizedUrl = normalizeUrl(url);
             
-            try {
-                // Call the API endpoint
-                const response = await fetch(config.apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url }),
-                });
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log("Worker response:", result);
-                    
-                    // If the worker returns a download URL, open it
-                    if (result.downloadUrl) {
-                        window.open(result.downloadUrl, '_blank');
-                    } else {
-                        // Fallback to original URL if no download URL provided
-                        window.open(url, '_blank');
-                    }
-                } else {
-                    console.error("Worker error:", response.status, response.statusText);
-                    // Fallback to original URL on error
-                    window.open(url, '_blank');
-                }
-            } catch (error) {
-                console.error("Failed to call worker:", error);
-                // Fallback to original URL on error
-                window.open(url, '_blank');
-            } finally {
-                isLoading = false;
-                
-                // Trigger Turnstile verification in background (non-blocking)
-                if (turnstileEnabled && !turnstileSolved && !turnstileExecuting) {
-                    console.log("Triggering background Turnstile verification...");
-                    turnstileExecuting = true;
-                    // Small delay to ensure download starts first
-                    setTimeout(() => {
-                        turnstileComponent?.execute();
-                    }, 100);
-                }
-                
-                // Reset Turnstile after action (regardless of verification status)
-                setTimeout(() => {
-                    if (turnstileComponent) {
-                        turnstileComponent.reset();
-                        turnstileSolved = false;
-                        turnstileToken = null;
-                        turnstileExecuting = false;
-                    }
-                }, 2000); // Reset after 2 seconds
-            }
+            // Navigate to results page with the URL as query parameter
+            goto(`/results?url=${encodeURIComponent(normalizedUrl)}`);
         }
     };
 
@@ -173,7 +147,7 @@
             linkInput.focus();
         }
 
-        if (e.key === "Enter" && validLink(link) && isFocused) {
+        if (e.key === "Enter" && validLink(link)) {
             savingHandler({ url: link });
         }
 
@@ -230,7 +204,7 @@
             autocomplete="off"
             autocapitalize="off"
             maxlength="512"
-            placeholder="Paste a link here..."
+            placeholder="Enter a domain or URL to analyze..."
             aria-label={isBotCheckOngoing
                 ? "Link input area (captcha required)"
                 : "Link input area"}

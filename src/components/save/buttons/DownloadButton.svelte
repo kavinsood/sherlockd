@@ -5,43 +5,14 @@
     export let disabled = false;
 
     let buttonText = ">>";
-    let buttonAltText = "Download";
+    let buttonAltText = "Analyze";
 
     const handleClick = async () => {
         if (url && !disabled) {
-            console.log("Download requested for:", url);
+            console.log("Analysis requested for:", url);
             
-            try {
-                // Call the API endpoint
-                const response = await fetch(config.apiUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url }),
-                });
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log("Worker response:", result);
-                    
-                    // If the worker returns a download URL, open it
-                    if (result.downloadUrl) {
-                        window.open(result.downloadUrl, '_blank');
-                    } else {
-                        // Fallback to original URL if no download URL provided
-                        window.open(url, '_blank');
-                    }
-                } else {
-                    console.error("Worker error:", response.status, response.statusText);
-                    // Fallback to original URL on error
-                    window.open(url, '_blank');
-                }
-            } catch (error) {
-                console.error("Failed to call worker:", error);
-                // Fallback to original URL on error
-                window.open(url, '_blank');
-            }
+            // Navigate to results page with the URL as query parameter
+            window.location.href = `/results?url=${encodeURIComponent(url)}`;
         }
     };
 </script>
