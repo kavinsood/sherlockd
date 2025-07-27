@@ -2,6 +2,10 @@ name = "sherlockd"
 compatibility_date = "2025-01-01"
 main = "worker/src/index.ts"
 
+# Build command to run before deployment
+[build]
+command = "pnpm run build"
+
 # Static assets from SvelteKit build
 [assets]
 directory = "./build"
