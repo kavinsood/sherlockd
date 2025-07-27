@@ -1,0 +1,41 @@
+<script lang="ts">
+    import { browser } from "$app/environment";
+    import SmallDialog from "$components/dialog/SmallDialog.svelte";
+</script>
+
+{#if !browser}
+    <noscript style="display: contents">
+        <div id="nojs-ack">
+            <SmallDialog
+                id="nojs-dialog"
+                bodyText={
+                    "sherlockd uses javascript for api requests and ui interactions, but it's not available in your browser. "
+                    + "you can still navigate around sherlockd, but most functionality won't work."
+                }
+                buttons={[
+                    {
+                        text: "got it",
+                        main: true,
+                        action: () => {},
+                        link: "#nojs-ack"
+                    },
+                ]}
+            />
+            <div id="nojs-dialog-backdrop"></div>
+        </div>
+    </noscript>
+{/if}
+
+<style>
+    :global(#nojs-ack) {
+        display: contents;
+    }
+
+    :global(#nojs-ack:target) {
+        display: none;
+    }
+
+    #nojs-dialog-backdrop {
+        opacity: 1;
+    }
+</style>

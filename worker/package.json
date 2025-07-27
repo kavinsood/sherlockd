@@ -1,0 +1,19 @@
+{
+  "name": "kitsune-worker",
+  "version": "1.0.0",
+  "description": "Cloudflare Worker for caching and rate limiting Kitsune API requests",
+  "main": "src/index.ts",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.0.0",
+    "wrangler": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
