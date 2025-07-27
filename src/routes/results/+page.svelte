@@ -122,35 +122,46 @@
             <div id="error-container">
                 <img src="/error.avif" alt="Error" height="152" />
                 <h3>Oops! Ran into an error</h3>
+                <p>{error}</p>
                 <button class="button elevated" onclick={() => analyzeUrl(targetUrl)}>
                     Try Again
                 </button>
             </div>
         {:else if result}
-            <!-- Results state -->
-            <div id="results-data">
-                <!-- All Technologies -->
-                <section class="result-section">
-                    <h3>Technologies Found</h3>
-                    <div class="technology-grid">
-                        {#each result.technologies as technology}
-                            <span class="technology-tag">{technology}</span>
-                        {/each}
-                    </div>
-                </section>
-
-                <!-- Categories -->
-                {#each result.categories as category}
+            <!-- Check if no technologies were found -->
+            {#if result.technologies.length === 0}
+                <!-- No results state -->
+                <div id="error-container">
+                    <img src="/error.avif" alt="No detections" height="152" />
+                    <h3>No detections found</h3>
+                    <p>We couldn't detect any technologies on this website.</p>
+                </div>
+            {:else}
+                <!-- Results state -->
+                <div id="results-data">
+                    <!-- All Technologies -->
                     <section class="result-section">
-                        <h3>{category.category}</h3>
+                        <h3>Technologies Found</h3>
                         <div class="technology-grid">
-                            {#each category.technologies as technology}
+                            {#each result.technologies as technology}
                                 <span class="technology-tag">{technology}</span>
                             {/each}
                         </div>
                     </section>
-                {/each}
-            </div>
+
+                    <!-- Categories -->
+                    {#each result.categories as category}
+                        <section class="result-section">
+                            <h3>{category.category}</h3>
+                            <div class="technology-grid">
+                                {#each category.technologies as technology}
+                                    <span class="technology-tag">{technology}</span>
+                                {/each}
+                            </div>
+                        </section>
+                    {/each}
+                </div>
+            {/if}
         {/if}
     </main>
 </div>
@@ -229,6 +240,13 @@
         color: var(--secondary);
         font-size: 18px;
         font-weight: 500;
+    }
+
+    #error-container p {
+        margin: 0;
+        color: var(--secondary);
+        font-size: 14px;
+        opacity: 0.8;
     }
 
     #results-data {
