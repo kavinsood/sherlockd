@@ -98,10 +98,13 @@ export default {
 			
 			let apiResponse: Response;
 			try {
+				const formData = new URLSearchParams();
+				formData.append('url', targetUrl.toString());
+
 				apiResponse = await fetch(env.KITSUNE_API_URL, {
 					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ url: targetUrl.toString() }),
+					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+					body: formData,
 				});
 
 				// If the origin fetch failed, just pass its error through.
