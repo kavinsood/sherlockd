@@ -56,6 +56,9 @@ const config = {
 
                     // hash of the theme preloader in app.html
                     "sha256-g67gIjM3G8yMbjbxyc3QUoVsKhdxgcQzCmSKXiZZo6s=",
+                    
+                    // hash for dynamically generated inline script
+                    "sha256-BLyVWEFjjFQBfVO4V44HncFCZOCVg59OciBQ1iqy71o=",
                 ],
 
                 "script-src-attr": [

@@ -9,7 +9,6 @@
 
     import OmniboxIcon from "$components/save/OmniboxIcon.svelte";
     import CaptchaTooltip from "$components/save/CaptchaTooltip.svelte";
-    import Turnstile from "$components/misc/Turnstile.svelte";
     import { config } from "$lib/config";
 
     type Optional<T> = T | null;
@@ -20,7 +19,6 @@
     let turnstileEnabled = $state(false); // Disable Turnstile for now
     let turnstileSolved = $state(false);
     let turnstileToken = $state<string | null>(null);
-    let turnstileComponent: Turnstile;
     let turnstileExecuting = $state(false); // Prevent multiple executions
 
     const validLink = (url: string) => {
@@ -218,13 +216,6 @@
             bind:disabled={isDisabled}
         />
     </div>
-
-    <!-- Hidden Turnstile component -->
-    <Turnstile 
-        bind:this={turnstileComponent}
-        on:solved={handleTurnstileSolved}
-        on:error={handleTurnstileError}
-    />
 </div>
 
 <style>

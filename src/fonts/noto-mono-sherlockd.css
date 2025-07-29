@@ -3,5 +3,5 @@
     font-style: normal;
     font-display: swap;
     font-weight: 400;
-    src: url(/fonts/RecursiveMonoLnrSt-Regular.woff2) format("woff2");
+    src: local("SF Mono"), local("Monaco"), local("Inconsolata"), local("Consolas"), local("Liberation Mono"), local("Courier New"), monospace;
 }
