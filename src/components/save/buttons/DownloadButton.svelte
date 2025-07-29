@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import { config } from "$lib/config";
     
     export let url: string;
@@ -11,8 +12,8 @@
         if (url && !disabled) {
             console.log("Analysis requested for:", url);
             
-            // Navigate to results page with the URL as query parameter
-            window.location.href = `/results?url=${encodeURIComponent(url)}`;
+            // Use goto for consistent SPA-style navigation
+            goto(`/results?url=${encodeURIComponent(url)}`);
         }
     };
 </script>
@@ -20,7 +21,7 @@
 <button
     id="download-button"
     {disabled}
-    onclick={handleClick}
+    on:click={handleClick}
     aria-label={buttonAltText}
 >
     <span id="download-state">{buttonText}</span>

@@ -98,13 +98,10 @@ export default {
 			
 			let apiResponse: Response;
 			try {
-				const formData = new URLSearchParams();
-				formData.append('url', targetUrl.toString());
-
 				apiResponse = await fetch(env.KITSUNE_API_URL, {
 					method: 'POST',
-					headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-					body: formData,
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ url: targetUrl.toString() }),
 				});
 
 				// If the origin fetch failed, just pass its error through.
@@ -120,23 +117,28 @@ export default {
 					console.log('Backend not available in development, returning mock response');
 					const mockResponse = {
 						url: targetUrl.toString(),
-						technologies: ["OneTrust", "Stripe", "Varnish", "Cloudflare"],
+						technologies: [
+							{ name: "OneTrust" },
+							{ name: "Stripe" },
+							{ name: "Varnish" },
+							{ name: "Cloudflare" }
+						],
 						categories: [
 							{
 								category: "Cookie compliance",
-								technologies: ["OneTrust"]
+								technologies: [{ name: "OneTrust" }]
 							},
 							{
 								category: "Payment processors",
-								technologies: ["Stripe"]
+								technologies: [{ name: "Stripe" }]
 							},
 							{
 								category: "Caching",
-								technologies: ["Varnish"]
+								technologies: [{ name: "Varnish" }]
 							},
 							{
 								category: "CDN",
-								technologies: ["Cloudflare"]
+								technologies: [{ name: "Cloudflare" }]
 							}
 						]
 					};

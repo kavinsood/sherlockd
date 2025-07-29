@@ -80,7 +80,7 @@
                         <h3>Technologies Found</h3>
                         <div class="technology-grid">
                             {#each data.result.technologies as technology}
-                                <span class="technology-tag">{technology}</span>
+                                <span class="technology-tag">{technology.name}</span>
                             {/each}
                         </div>
                     </section>
@@ -91,7 +91,7 @@
                             <h3>{category.category}</h3>
                             <div class="technology-grid">
                                 {#each category.technologies as technology}
-                                    <span class="technology-tag">{technology}</span>
+                                    <span class="technology-tag">{technology.name}</span>
                                 {/each}
                             </div>
                         </section>

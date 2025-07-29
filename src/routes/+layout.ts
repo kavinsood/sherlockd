@@ -3,8 +3,6 @@ export const ssr = true;
 
 import type { Load } from '@sveltejs/kit';
 
-
-
-export const load: Load = async ({ url }) => {
+export const load: Load = async () => {
     return {};
 }
