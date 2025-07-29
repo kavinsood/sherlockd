@@ -1,14 +1,62 @@
 <script lang="ts">
+    import { page } from "$app/stores";
     import { goto } from "$app/navigation";
+    import { browser } from "$app/environment";
     import type { AnalysisResult } from "$lib/types/api";
     import Skeleton from "$components/misc/Skeleton.svelte";
     import IconArrowLeft from "@tabler/icons-svelte/IconArrowLeft.svelte";
+    import { config } from "$lib/config";
 
-    // Data from the load function
-    export let data: {
-        result?: AnalysisResult;
-        error?: string;
+    // Data from the load function using Svelte 5 runes
+    const { data } = $props<{
         targetUrl?: string;
+        error?: string;
+    }>();
+
+    let result: AnalysisResult | null = $state(null);
+    let isLoading = $state(true);
+    let error = $state<string | null>(data.error || null);
+
+    // Get URL from query params
+    let targetUrl = $derived(browser ? ($page.url.searchParams.get("url") || data.targetUrl || "") : (data.targetUrl || ""));
+
+    $effect(() => {
+        if (targetUrl && browser) {
+            analyzeUrl(targetUrl);
+        }
+    });
+
+    const analyzeUrl = async (url: string) => {
+        isLoading = true;
+        error = null;
+        
+        try {
+            const response = await fetch(config.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ url }),
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                
+                // Check if this is a special error response from the worker
+                if (data.error && data.message) {
+                    error = data.message;
+                } else {
+                    result = data;
+                }
+            } else {
+                error = `Analysis failed: ${response.status} ${response.statusText}`;
+            }
+        } catch (err) {
+            error = 'Failed to analyze URL. Please try again.';
+            console.error('Analysis error:', err);
+        } finally {
+            isLoading = false;
+        }
     };
 
     const goBack = () => {
@@ -25,8 +73,8 @@
     };
 
     const retryAnalysis = () => {
-        if (data.targetUrl) {
-            goto(`/results?url=${encodeURIComponent(data.targetUrl)}`);
+        if (targetUrl) {
+            analyzeUrl(targetUrl);
         }
     };
 </script>
@@ -44,62 +92,17 @@
             <span>Back</span>
         </button>
         
-        {#if data.targetUrl}
+        {#if targetUrl}
             <div id="analyzed-url">
-                <h2>Analyzing {formatUrl(data.targetUrl)}</h2>
+                <h2>Analyzing {formatUrl(targetUrl)}</h2>
             </div>
         {/if}
     </header>
 
     <!-- Main content -->
     <main id="results-content">
-        {#if data.error}
-            <!-- Error state -->
-            <div id="error-container">
-                <img src="/error.avif" alt="Error" height="152" />
-                <h3>Oops! Ran into an error</h3>
-                <p>{data.error}</p>
-                <button class="button elevated" on:click={retryAnalysis}>
-                    Try Again
-                </button>
-            </div>
-        {:else if data.result}
-            <!-- Check if no technologies were found -->
-            {#if data.result.technologies.length === 0}
-                <!-- No results state -->
-                <div id="error-container">
-                    <img src="/error.avif" alt="No detections" height="152" />
-                    <h3>No detections found</h3>
-                    <p>We couldn't detect any technologies on this website.</p>
-                </div>
-            {:else}
-                <!-- Results state -->
-                <div id="results-data">
-                    <!-- All Technologies -->
-                    <section class="result-section">
-                        <h3>Technologies Found</h3>
-                        <div class="technology-grid">
-                            {#each data.result.technologies as technology}
-                                <span class="technology-tag">{technology.name}</span>
-                            {/each}
-                        </div>
-                    </section>
-
-                    <!-- Categories -->
-                    {#each data.result.categories as category}
-                        <section class="result-section">
-                            <h3>{category.category}</h3>
-                            <div class="technology-grid">
-                                {#each category.technologies as technology}
-                                    <span class="technology-tag">{technology.name}</span>
-                                {/each}
-                            </div>
-                        </section>
-                    {/each}
-                </div>
-            {/if}
-        {:else}
-            <!-- Loading state (fallback) -->
+        {#if isLoading}
+            <!-- Skeleton loading state -->
             <div id="skeleton-container">
                 <Skeleton width="200px" height="24px" />
                 <div class="skeleton-section">
@@ -126,6 +129,51 @@
                     </div>
                 </div>
             </div>
+        {:else if error}
+            <!-- Error state -->
+            <div id="error-container">
+                <img src="/error.avif" alt="Error" height="152" />
+                <h3>Oops! Ran into an error</h3>
+                <p>{error}</p>
+                <button class="button elevated" on:click={retryAnalysis}>
+                    Try Again
+                </button>
+            </div>
+        {:else if result}
+            <!-- Check if no technologies were found -->
+            {#if result.technologies.length === 0}
+                <!-- No results state -->
+                <div id="error-container">
+                    <img src="/error.avif" alt="No detections" height="152" />
+                    <h3>No detections found</h3>
+                    <p>We couldn't detect any technologies on this website.</p>
+                </div>
+            {:else}
+                <!-- Results state -->
+                <div id="results-data">
+                    <!-- All Technologies -->
+                    <section class="result-section">
+                        <h3>Technologies Found</h3>
+                        <div class="technology-grid">
+                            {#each result.technologies as technology}
+                                <span class="technology-tag">{technology.name}</span>
+                            {/each}
+                        </div>
+                    </section>
+
+                    <!-- Categories -->
+                    {#each result.categories as category}
+                        <section class="result-section">
+                            <h3>{category.category}</h3>
+                            <div class="technology-grid">
+                                {#each category.technologies as technology}
+                                    <span class="technology-tag">{technology.name}</span>
+                                {/each}
+                            </div>
+                        </section>
+                    {/each}
+                </div>
+            {/if}
         {/if}
     </main>
 </div>
