@@ -6,6 +6,7 @@
     export let dismissable = true;
 
     let dialogParent: HTMLDialogElement;
+    let dialogBody: HTMLDivElement;
 
     let open = false;
     let closing = false;
@@ -14,14 +15,14 @@
         if (dialogParent) {
             closing = true;
             open = false;
+            // The actual closing will be handled by onanimationend
+        }
+    };
 
-            // wait 150ms for the closing animation to finish
-            setTimeout(() => {
-                // check if dialog parent is still present
-                if (dialogParent) {
-                    dialogParent.close();
-                }
-            }, 150);
+    const handleAnimationEnd = () => {
+        if (closing && dialogParent) {
+            dialogParent.close();
+            closing = false; // Reset state
         }
     };
 
@@ -34,6 +35,12 @@
 </script>
 
 <dialog id="dialog-{id}" bind:this={dialogParent} class:closing class:open>
-    <slot></slot>
+    <div 
+        class="dialog-body" 
+        bind:this={dialogBody}
+        onanimationend={handleAnimationEnd}
+    >
+        <slot></slot>
+    </div>
     <DialogBackdropClose closeFunc={dismissable ? close : () => {}} />
 </dialog>

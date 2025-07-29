@@ -21,6 +21,16 @@ const config = {
             precompress: false,
             strict: true
         }),
+        prerender: {
+            entries: ['*'],
+            handleHttpError: ({ path, referrer, message }) => {
+                // Ignore errors for the results page during prerendering
+                if (path.startsWith('/results')) {
+                    return;
+                }
+                throw new Error(message);
+            }
+        },
         csp: {
             mode: "hash",
             directives: {
