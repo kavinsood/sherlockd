@@ -21,34 +21,40 @@
     let turnstileToken = $state<string | null>(null);
     let turnstileExecuting = $state(false); // Prevent multiple executions
 
-    const validLink = (url: string) => {
-        if (!url || url.trim() === '') return false;
-        
-        // If it already has a protocol, validate it
-        if (url.includes('://')) {
-            try {
-                new URL(url);
-                return true;
-            } catch {
-                return false;
-            }
+    // REPLACEMENT for the validLink function
+    const validLink = (url: string): boolean => {
+        const trimmedUrl = url.trim();
+        if (!trimmedUrl) {
+            return false;
         }
-        
-        // For domain names without protocol, check if it's a valid domain
-        const domainRegex = /^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-        return domainRegex.test(url.trim());
+
+        // Always work with a full URL. Prepend a protocol if it's missing.
+        const fullUrl = trimmedUrl.includes("://")
+            ? trimmedUrl
+            : `https://${trimmedUrl}`;
+
+        try {
+            const parsed = new URL(fullUrl);
+            // A simple heuristic for a valid public domain: it must have a dot
+            // in the hostname and not be an empty hostname.
+            // This prevents inputs like "http://localhost" or "foo".
+            return parsed.hostname !== "" && parsed.hostname.includes(".");
+        } catch {
+            // If the URL constructor throws, it's invalid.
+            return false;
+        }
     };
 
     const normalizeUrl = (url: string): string => {
-        if (!url || url.trim() === '') return '';
-        
-        // If it already has a protocol, return as is
-        if (url.includes('://')) {
-            return url;
+        // This function is still useful for preparing the URL for submission.
+        const trimmedUrl = url.trim();
+        if (!trimmedUrl) return '';
+
+        if (trimmedUrl.includes('://')) {
+            return trimmedUrl;
         }
-        
-        // Add https:// if it's just a domain
-        return `https://${url.trim()}`;
+
+        return `https://${trimmedUrl}`;
     };
 
     let isFocused = $state(false);
