@@ -58,4 +58,9 @@
             padding-bottom: 0;
         }
     }
+
+    /* Invert sherlockd.avif image in light mode */
+    :global(html.light) #sherlockd-save img[src="/sherlockd.avif"] {
+        filter: invert(1);
+    }
 </style>
