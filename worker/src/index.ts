@@ -113,38 +113,13 @@ export default {
 				const isDevelopment = env.ENVIRONMENT === 'development';
 				
 				if (isDevelopment) {
-					// For development/testing, return a mock response when backend is not available
-					console.log('Backend not available in development, returning mock response');
-					const mockResponse = {
-						url: targetUrl.toString(),
-						technologies: [
-							{ name: "OneTrust" },
-							{ name: "Stripe" },
-							{ name: "Varnish" },
-							{ name: "Cloudflare" }
-						],
-						categories: [
-							{
-								category: "Cookie compliance",
-								technologies: [{ name: "OneTrust" }]
-							},
-							{
-								category: "Payment processors",
-								technologies: [{ name: "Stripe" }]
-							},
-							{
-								category: "Caching",
-								technologies: [{ name: "Varnish" }]
-							},
-							{
-								category: "CDN",
-								technologies: [{ name: "Cloudflare" }]
-							}
-						]
-					};
-					
-					return new Response(JSON.stringify(mockResponse), {
-						status: 200,
+					// In development, return a generic error when backend is not available
+					console.log('Backend not available in development');
+					return new Response(JSON.stringify({ 
+						error: true, 
+						message: "Backend service not available in development" 
+					}), {
+						status: 200, // Use 200 so frontend can handle it gracefully
 						headers: { 'Content-Type': 'application/json' }
 					});
 				} else {

@@ -1,6 +1,7 @@
 export interface Technology {
     name: string;
-    category?: string;
+    description: string;
+    website: string;
 }
 
 export interface Category {
@@ -10,12 +11,8 @@ export interface Category {
 
 export interface AnalysisResult {
     url: string;
-    technologies: Technology[];
-    categories: Category[];
+    technologies: Technology[]; // The flat list for the "All Technologies" section
+    categories: Category[];   // The grouped list for the category sections
 }
 
-export interface ApiResponse {
-    url: string;
-    technologies: Technology[];
-    categories: Category[];
-} 
+export type ApiResponse = AnalysisResult; 
