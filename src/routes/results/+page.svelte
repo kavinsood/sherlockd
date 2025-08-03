@@ -161,17 +161,19 @@
                         </div>
                     </section>
 
-                    <!-- Categories -->
-                    {#each result.categories as category}
-                        <section class="result-section">
-                            <h3>{category.category}</h3>
-                            <div class="technology-grid">
-                                {#each category.technologies as technology}
-                                    <span class="technology-tag">{technology.name}</span>
-                                {/each}
-                            </div>
-                        </section>
-                    {/each}
+                    <!-- Categories in a responsive grid -->
+                    <div class="categories-grid">
+                        {#each result.categories as category}
+                            <section class="category-card">
+                                <h3>{category.category}</h3>
+                                <div class="technology-grid">
+                                    {#each category.technologies as technology}
+                                        <span class="technology-tag">{technology.name}</span>
+                                    {/each}
+                                </div>
+                            </section>
+                        {/each}
+                    </div>
                 </div>
             {/if}
         {/if}
@@ -181,8 +183,10 @@
 <style>
     #results-container {
         padding: var(--padding);
-        min-height: 100vh;
-        gap: 20px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
     }
 
     #results-header {
@@ -191,6 +195,8 @@
         gap: 15px;
         width: 100%;
         max-width: 800px;
+        flex-shrink: 0;
+        margin-bottom: 20px;
     }
 
     .back-button {
@@ -217,6 +223,9 @@
         display: flex;
         flex-direction: column;
         gap: 30px;
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     #skeleton-container {
@@ -245,6 +254,7 @@
         gap: 15px;
         text-align: center;
         min-height: 400px;
+        flex: 1;
     }
 
     #error-container h3 {
@@ -265,37 +275,96 @@
         display: flex;
         flex-direction: column;
         gap: 30px;
+        padding-bottom: 20px;
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .result-section {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 15px;
     }
 
     .result-section h3 {
         margin: 0;
-        font-size: 16px;
-        font-weight: 500;
+        font-size: 18px;
+        font-weight: 600;
         color: var(--secondary);
-        border-bottom: 1px solid var(--content-border);
-        padding-bottom: 8px;
+        padding-bottom: 10px;
     }
 
     .technology-grid {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        align-items: flex-start;
     }
 
     .technology-tag {
         background: var(--button-elevated);
         color: var(--secondary);
-        padding: 6px 12px;
+        padding: 8px 14px;
         border-radius: var(--border-radius);
         font-size: 13px;
         font-weight: 500;
         border: 1px solid var(--content-border);
+        white-space: nowrap;
+        line-height: 1.2;
+        transition: all 0.2s ease;
+    }
+
+    .technology-tag:hover {
+        background: var(--button-elevated-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .category-card {
+        background: var(--card-background);
+        border-radius: var(--border-radius);
+        padding: 20px;
+        border: 1px solid var(--content-border);
+        box-shadow: var(--card-shadow);
+        transition: all 0.2s ease;
+    }
+
+    .category-card:hover {
+        box-shadow: var(--card-hover-shadow);
+        transform: translateY(-2px);
+    }
+
+    .category-card h3 {
+        margin: 0 0 15px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--secondary);
+        padding-bottom: 10px;
+    }
+
+    .category-card .technology-grid {
+        gap: 6px;
+    }
+
+    .category-card .technology-tag {
+        font-size: 12px;
+        padding: 6px 12px;
     }
 
     @media screen and (max-width: 535px) {
@@ -309,6 +378,15 @@
             gap: 10px;
         }
 
+        .categories-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .category-card {
+            padding: 15px;
+        }
+
         .technology-grid {
             gap: 6px;
         }
@@ -316,6 +394,21 @@
         .technology-tag {
             font-size: 12px;
             padding: 5px 10px;
+        }
+
+        .result-section h3 {
+            font-size: 16px;
+        }
+
+        .category-card h3 {
+            font-size: 14px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .categories-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
         }
     }
 </style> 

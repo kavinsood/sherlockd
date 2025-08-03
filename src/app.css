@@ -48,6 +48,10 @@
     --content-border: rgba(255, 255, 255, 0.045);
     --content-border-thickness: 1px;
 
+    --card-background: #1a1a1a;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --card-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+
     --input-border: #383838;
 
     --toggle-bg: var(--input-border);

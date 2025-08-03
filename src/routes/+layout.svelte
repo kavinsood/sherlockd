@@ -86,7 +86,6 @@
 
     #content {
         display: flex;
-        overflow: scroll;
         background-color: var(--primary);
         width: 100%;
         height: 100%;
