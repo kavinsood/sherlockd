@@ -44,11 +44,35 @@
 </script>
 
 <svelte:head>
-    <meta name="description" content="Download videos from various platforms" />
-    <meta property="og:description" content="Download videos from various platforms" />
-
+    <title>sherlock'd</title>
+    <meta name="description" content="sherlockd: The fastest way to see what a website is built with." />
+    <meta name="author" content="sherlock'd" />
     <meta name="theme-color" content={theme === 'dark' ? '#000000' : '#ffffff'} />
-    		<title>sherlock'd</title>
+    
+    <!-- Essential OpenGraph tags -->
+    <meta property="og:title" content="sherlock'd" />
+    <meta property="og:description" content="sherlockd: The fastest way to see what a website is built with." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sherlockd.run" />
+    <meta property="og:site_name" content="sherlock'd" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- OpenGraph image -->
+    <meta property="og:image" content="https://sherlockd.run/og_image.png" />
+    <meta property="og:image:alt" content="sherlockd: The fastest way to see what a website is built with." />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- Twitter Card tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="sherlock'd" />
+    <meta name="twitter:description" content="sherlockd: The fastest way to see what a website is built with." />
+    <meta name="twitter:image" content="https://sherlockd.run/og_image.png" />
+    <meta name="twitter:image:alt" content="sherlockd: The fastest way to see what a website is built with." />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sherlockd.run" />
 </svelte:head>
 
 <div
