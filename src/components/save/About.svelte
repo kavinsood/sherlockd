@@ -24,7 +24,7 @@
 
     <PopoverContainer id="services-popover" {expanded}>
         <div id="about-content" class="subtext">
-            I got tired of waiting 30 seconds for Wappalyzer.  Sherlock'd sees everything, instantly. No login, no upsell. Built with Go because speed matters.  Point it at any site and get what they’re hiding. <a href="https://github.com/kavinsood/kitsune" target="_blank" rel="noopener noreferrer">Open source</a> because the internet deserves better tools. Made by <a href="https://kvnsd.co" target="_blank" rel="noopener noreferrer">Kavin</a>
+            sherlock'd is a flashlight for the web. point it anywhere, see what's running underneath. no login, no upsells. built with go. <a href="https://github.com/kavinsood/kitsune" target="_blank" rel="noopener noreferrer">Open source</a> because the internet deserves better tools. Made by <a href="https://x.com/itskavins" target="_blank" rel="noopener noreferrer">Kavin</a>
         </div>
     </PopoverContainer>
 </div>
