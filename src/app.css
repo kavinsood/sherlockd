@@ -153,6 +153,10 @@ html.light {
 
     --content-border: rgba(0, 0, 0, 0.03);
 
+    --card-background: #f9f9f9;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --card-hover-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+
     --input-border: #adadb7;
 
     --toggle-bg: var(--input-border);
