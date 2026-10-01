@@ -1,0 +1,21 @@
+worker/src/index.ts
+  s_b2fab5feb1943a::t_d7816d473c87a1 5-10,106,110-114,148-158,160
+wrangler.toml
+  s_b2fab5feb1943a::t_aa875f0c7b0aef 22-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0894335e49ce7e7839e5dc9bd2f934ae211420d0",
+  "prompts": {},
+  "sessions": {
+    "s_b2fab5feb1943a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6c6f39f-98c8-42f4-8b32-5d8d5152d0ff",
+        "model": "unknown"
+      },
+      "human_author": "Kavin Sood <68739182+kavinsood@users.noreply.github.com>"
+    }
+  }
+}
