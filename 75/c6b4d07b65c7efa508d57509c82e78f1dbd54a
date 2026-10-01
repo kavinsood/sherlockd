@@ -1,0 +1,23 @@
+src/lib/types/api.ts
+  s_1138b64f8109c9::t_0c8f6ac14477a4 16-18
+src/routes/results/+page.svelte
+  s_1138b64f8109c9::t_55b15f4c93b9f9 45-50,158-162,283-289
+worker/src/index.ts
+  s_1138b64f8109c9::t_17f07cfbed0dd2 20-26,91-93
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "75c6b4d07b65c7efa508d57509c82e78f1dbd54a",
+  "prompts": {},
+  "sessions": {
+    "s_1138b64f8109c9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b7b62a87-2bc3-4198-8c67-7bd4d3ca2f50",
+        "model": "unknown"
+      },
+      "human_author": "Kavin Sood <68739182+kavinsood@users.noreply.github.com>"
+    }
+  }
+}
