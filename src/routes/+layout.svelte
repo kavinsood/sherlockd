@@ -53,12 +53,12 @@
     <meta property="og:title" content="sherlock'd" />
     <meta property="og:description" content="sherlockd: The fastest way to see what a website is built with." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sherlockd.run" />
+    <meta property="og:url" content="https://sherlockd.kavinsood.com" />
     <meta property="og:site_name" content="sherlock'd" />
     <meta property="og:locale" content="en_US" />
     
     <!-- OpenGraph image -->
-    <meta property="og:image" content="https://sherlockd.run/og_image.png" />
+    <meta property="og:image" content="https://sherlockd.kavinsood.com/og_image.png" />
     <meta property="og:image:alt" content="sherlockd: The fastest way to see what a website is built with." />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
@@ -68,11 +68,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="sherlock'd" />
     <meta name="twitter:description" content="sherlockd: The fastest way to see what a website is built with." />
-    <meta name="twitter:image" content="https://sherlockd.run/og_image.png" />
+    <meta name="twitter:image" content="https://sherlockd.kavinsood.com/og_image.png" />
     <meta name="twitter:image:alt" content="sherlockd: The fastest way to see what a website is built with." />
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://sherlockd.run" />
+    <link rel="canonical" href="https://sherlockd.kavinsood.com" />
 </svelte:head>
 
 <div

@@ -1,6 +1,7 @@
 name = "sherlockd"
 compatibility_date = "2025-01-01"
 main = "worker/src/index.ts"
+routes = [{ pattern = "sherlockd.kavinsood.com", custom_domain = true }]
 
 # Build command to run before deployment
 [build]
@@ -26,6 +27,7 @@ service = "kitsune-wasm"
 
 # Environment variables (not secrets)
 [vars]
-KITSUNE_API_URL = "https://api.sherlockd.run/analyze"
-ENVIRONMENT = "development" 
+# Only used when the KITSUNE binding is absent, e.g. against a local kitsune-api.
+KITSUNE_API_URL = "http://localhost:8080/analyze"
+ENVIRONMENT = "production"
 

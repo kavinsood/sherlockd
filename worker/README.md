@@ -14,7 +14,7 @@ A Cloudflare Worker that acts as a caching proxy with rate limiting for the Kits
 The Worker follows this flow:
 1. **Cache Check** → If cached, return immediately
 2. **Rate Limit Check** → Only on cache miss, check rate limits
-3. **Origin Fetch** → If not rate limited, fetch from Render service
+3. **Origin Fetch** → If not rate limited, call the `kitsune-wasm` Worker through the `KITSUNE` service binding
 4. **Cache Storage** → Store successful responses for future use
 
 ## Setup
@@ -25,13 +25,9 @@ The Worker follows this flow:
    npm install
    ```
 
-2. Set the secret for your Render service URL:
-   ```bash
-   npx wrangler secret put KITSUNE_API_URL
-   ```
-   Enter: `https://hostedbackend.com/analyze`
-   
-   **Note**: You can also configure this URL in your frontend's `.env` file as `VITE_RENDER_API_URL` if you want to make it configurable.
+2. Deploy the `kitsune-wasm` Worker from the kitsune repo (`cmd/kitsune-worker`).
+   This Worker reaches it through the `KITSUNE` service binding; without the
+   binding it falls back to `KITSUNE_API_URL`.
 
 3. Deploy the Worker:
    ```bash

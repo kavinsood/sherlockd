@@ -17,5 +17,5 @@ simple = { limit = 10, period = 60 }
 
 # Environment variables for local development
 [vars]
-KITSUNE_API_URL = "https://hostedbackend.com/analyze"
+KITSUNE_API_URL = "http://localhost:8080/analyze"
 ENVIRONMENT = "development" 

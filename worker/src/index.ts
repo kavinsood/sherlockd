@@ -97,7 +97,7 @@ export default {
 				return new Response(`Rate limit exceeded for domain: ${targetUrl.hostname}`, { status: 429 });
 			}
 
-			// --- 5. Fetch from Origin (Your Render Service) ---
+			// --- 5. Fetch from Origin (the kitsune-wasm Worker) ---
 			// If we've gotten this far, we are clear to hit the backend.
 			console.log(`Fetching from origin for: ${targetUrl.toString()}`);
 			

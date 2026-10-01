@@ -16,30 +16,28 @@ This project includes a Cloudflare Worker that acts as a caching proxy with rate
 
 ### Quick Setup
 ```bash
-cd worker
-npm install
-npx wrangler secret put KITSUNE_API_URL
-# Enter: https://hostedbackend.com/analyze
-npm run deploy
+# 1. In the kitsune repo: deploy the backend Worker
+cd cmd/kitsune-worker && npm install && npx wrangler deploy
+
+# 2. Here: build the frontend and deploy sherlockd
+pnpm install
+pnpm run deploy
 ```
 
 For detailed setup instructions, see [worker/README.md](worker/README.md).
 
 ### Environment Configuration
 
-The project is deployed as a single Cloudflare Worker that serves both the SvelteKit frontend and the API. You need to configure the backend API URL:
+The project is deployed as a single Cloudflare Worker that serves both the SvelteKit frontend and the API, at https://sherlockd.kavinsood.com.
 
-1. Create a `.env` file in the root directory
-2. Add your configuration:
-   ```
-   # Backend API URL - required for the worker
-   KITSUNE_API_URL=https://hostedbackend.com/analyze
-   
-   # Frontend API URL - optional, has default
-   VITE_RENDER_API_URL=https://hostedbackend.com/analyze
-   ```
+`/analyze` is served by the [kitsune](https://github.com/kavinsood/kitsune) `kitsune-wasm` Worker (`cmd/kitsune-worker`), reached through the `KITSUNE` service binding in `wrangler.toml`. Deploy that Worker first.
 
-3. Restart your development server for the changes to take effect.
+Without the binding, the Worker falls back to `KITSUNE_API_URL`, e.g. a local kitsune server:
+
+```
+# .env
+KITSUNE_API_URL=http://localhost:8080/analyze
+```
 
 ### Deployment
 
