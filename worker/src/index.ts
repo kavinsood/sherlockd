@@ -18,6 +18,13 @@ export interface Env {
 }
 
 /**
+ * Version of the cached results, part of every cache key. Bump it when a
+ * kitsune release changes what it detects, so stale results aren't served
+ * for the month they're cached.
+ */
+const CACHE_VERSION = '2';
+
+/**
  * Normalizes a URL to improve cache hit rates by:
  * - Ensuring HTTPS protocol (preferred over HTTP)
  * - Removing www. prefix
@@ -81,7 +88,9 @@ export default {
 			
 			// Normalize the URL for better cache hit rates
 			const normalizedUrl = normalizeUrl(targetUrl);
-			const cacheKey = new Request(normalizedUrl, { method: 'GET' });
+			const cacheKeyUrl = new URL(normalizedUrl);
+			cacheKeyUrl.searchParams.set('__sherlockd_cache', CACHE_VERSION);
+			const cacheKey = new Request(cacheKeyUrl.toString(), { method: 'GET' });
 			const cachedResponse = await cache.match(cacheKey);
 
 			if (cachedResponse) {

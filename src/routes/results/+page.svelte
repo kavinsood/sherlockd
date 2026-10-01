@@ -42,8 +42,12 @@
             if (response.ok) {
                 const data = await response.json();
                 
-                // Check if this is a special error response from the worker
-                if (data.error && data.message) {
+                // Check if this is a special error response from the worker.
+                // A blocked site can still carry what its headers, cookies and
+                // DNS revealed; show that alongside the message.
+                if (data.error && data.blocked && data.technologies?.length) {
+                    result = data;
+                } else if (data.error && data.message) {
                     error = data.message;
                 } else {
                     result = data;
@@ -151,6 +155,11 @@
             {:else}
                 <!-- Results state -->
                 <div id="results-data">
+                    {#if result.blocked}
+                        <p class="blocked-notice">
+                            {result.message} These were detected from its headers, cookies and DNS only.
+                        </p>
+                    {/if}
                     <!-- All Technologies -->
                     <section class="result-section">
                         <h3>Technologies Found</h3>
@@ -265,6 +274,13 @@
     }
 
     #error-container p {
+        margin: 0;
+        color: var(--secondary);
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .blocked-notice {
         margin: 0;
         color: var(--secondary);
         font-size: 14px;
