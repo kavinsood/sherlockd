@@ -1,0 +1,19 @@
+worker/src/index.ts
+  s_d661cb583cd291::t_a0dc7ceec6e731 25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "db6105ad5bc0bd9b417cc3f09c142f71a147e846",
+  "prompts": {},
+  "sessions": {
+    "s_d661cb583cd291": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ce2f979d-e3fb-47d5-88a8-dd9325df26fa",
+        "model": "unknown"
+      },
+      "human_author": "Kavin Sood <68739182+kavinsood@users.noreply.github.com>"
+    }
+  }
+}
