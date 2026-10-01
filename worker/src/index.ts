@@ -2,7 +2,12 @@ export interface Env {
 	// This binding provides access to the Rate Limiter defined in wrangler.toml
 	RATE_LIMITER: RateLimiter;
 
-	// Environment variable holding the URL of your Render service.
+	// Service binding to the kitsune-wasm Worker. Preferred when present:
+	// Workers can't reach other Workers on the same account via workers.dev.
+	KITSUNE?: Fetcher;
+
+	// URL of the Kitsune API, used when the KITSUNE binding is absent
+	// (e.g. local development against a standalone server).
 	KITSUNE_API_URL: string;
 
 	// Environment variable to distinguish between development and production
@@ -98,11 +103,15 @@ export default {
 			
 			let apiResponse: Response;
 			try {
-				apiResponse = await fetch(env.KITSUNE_API_URL, {
+				const init: RequestInit = {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ url: targetUrl.toString() }),
-				});
+				};
+				// The binding ignores the URL's host; only the path matters.
+				apiResponse = env.KITSUNE
+					? await env.KITSUNE.fetch('https://kitsune/analyze', init)
+					: await fetch(env.KITSUNE_API_URL, init);
 
 				// If the origin fetch failed, just pass its error through.
 				if (!apiResponse.ok) {
@@ -136,8 +145,19 @@ export default {
 			}
 
 			// --- 6. Cache the Successful Response ---
+			// Error payloads (e.g. the site blocked the scanner) come back as 200s
+			// so the frontend can show their message; don't cache those.
+			const payload = await apiResponse.text();
+			try {
+				if (JSON.parse(payload).error) {
+					return new Response(payload, apiResponse);
+				}
+			} catch {
+				// Not JSON; cache as-is.
+			}
+
 			// Create a new response to add caching headers.
-			const responseToCache = new Response(apiResponse.body, apiResponse);
+			const responseToCache = new Response(payload, apiResponse);
 			responseToCache.headers.set('Cache-Control', 'public, max-age=2628000'); // Cache for ~1 month
 
 			// Use waitUntil to avoid blocking the response to the user on the cache write.
