@@ -1,0 +1,33 @@
+.env.example
+  s_b2fab5feb1943a::t_cb61b10d7868aa 4-6
+README.md
+  s_b2fab5feb1943a::t_e24110a52f8353 19-24,31-33,35,37-40
+pnpm-workspace.yaml
+  s_b2fab5feb1943a::t_74ffd77dadcc4e 1-3
+src/routes/+layout.svelte
+  s_b2fab5feb1943a::t_f680c6d4718c43 56,61,71,75
+worker/README.md
+  s_b2fab5feb1943a::t_e3196dba1b24c9 17,28-30
+worker/src/index.ts
+  s_b2fab5feb1943a::t_f0f94168699cb8 100
+worker/wrangler.toml
+  s_b2fab5feb1943a::t_d4f99da8337927 20
+wrangler.toml
+  s_b2fab5feb1943a::t_0a96db8a558d58 4,30-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "418cfbfade974c6e1424de718267ef60a6fccc1b",
+  "prompts": {},
+  "sessions": {
+    "s_b2fab5feb1943a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f6c6f39f-98c8-42f4-8b32-5d8d5152d0ff",
+        "model": "unknown"
+      },
+      "human_author": "Kavin Sood <68739182+kavinsood@users.noreply.github.com>"
+    }
+  }
+}
