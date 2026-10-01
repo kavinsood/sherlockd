@@ -22,7 +22,7 @@ export interface Env {
  * kitsune release changes what it detects, so stale results aren't served
  * for the month they're cached.
  */
-const CACHE_VERSION = '2';
+const CACHE_VERSION = '5';
 
 /**
  * Normalizes a URL to improve cache hit rates by:
