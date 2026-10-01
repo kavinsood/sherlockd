@@ -1,0 +1,21 @@
+worker/README.md
+  s_3eaa7721cfb89c::t_8d724a23abe377 32,82
+worker/package.json
+  s_3eaa7721cfb89c::t_3a28a59ddd8ea5 7-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "775188791425629cb9aed86038df12f35798447d",
+  "prompts": {},
+  "sessions": {
+    "s_3eaa7721cfb89c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "18d0c15b-9a5e-4c72-b8e0-cdc8bc523aad",
+        "model": "unknown"
+      },
+      "human_author": "Kavin Sood <68739182+kavinsood@users.noreply.github.com>"
+    }
+  }
+}
