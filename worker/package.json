@@ -4,8 +4,8 @@
   "description": "Cloudflare Worker for caching and rate limiting Kitsune API requests",
   "main": "src/index.ts",
   "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
+    "deploy": "wrangler deploy -c ../wrangler.toml",
+    "dev": "wrangler dev -c ../wrangler.toml",
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {

@@ -29,7 +29,7 @@ The Worker follows this flow:
    This Worker reaches it through the `KITSUNE` service binding; without the
    binding it falls back to `KITSUNE_API_URL`.
 
-3. Deploy the Worker:
+3. Deploy the Worker (it uses the root `wrangler.toml`):
    ```bash
    npm run deploy
    ```
@@ -79,22 +79,4 @@ npm run type-check
 npm run deploy
 ```
 
-The Worker will be deployed to Cloudflare's edge network and will be available at your assigned subdomain.
-
-### Getting Your Worker URL
-
-After deployment, you'll see output similar to:
-```
-✅ Deployment successful!
-🎉 Your Worker is now live on Cloudflare's edge network
-```
-
-The Worker URL will be in the format: `https://kitsune-worker.your-subdomain.workers.dev`
-
-You can also find your Worker URL by:
-1. Going to the [Cloudflare Dashboard](https://dash.cloudflare.com/)
-2. Navigating to Workers & Pages
-3. Finding your `kitsune-worker` in the list
-4. The URL will be displayed in the worker details
-
-**Important**: Copy this URL and add it to your frontend's `.env` file as `VITE_WORKER_URL`. 
+This deploys the `sherlockd` Worker with the repository's root `wrangler.toml`, which serves the site and this API at sherlockd.kavinsood.com.
